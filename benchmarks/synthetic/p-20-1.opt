@@ -1,0 +1,8 @@
+(drive truck1 i5 i4)
+(drive truck1 i4 j4)
+(drive truck1 j4 k4)
+(pick-up truck1 k4 pack1 capacity-3 capacity-4)
+(drive truck1 k4 k5)
+(drive truck1 k5 k6)
+(drop truck1 k6 pack1 capacity-3 capacity-4)
+; cost = 502 (general cost)

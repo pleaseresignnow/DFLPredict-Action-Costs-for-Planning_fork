@@ -1,0 +1,14 @@
+Required  .sas file for the instances (as mentioned in the paper)
+
+5-1-1 (a):  './benchmarks/synthetic/p.05.1.1.sas'
+5-1-1 (b):  './benchmarks/synthetic/p.05.1.4.sas'
+5-2-1 (a):  './benchmarks/synthetic/p.05.2.1.sas'
+5-2-1 (b):  './benchmarks/synthetic/p.05.2.2.sas'
+5-3-1:      './benchmarks/synthetic/p.05.3.1.sas'
+5-2-2:      './benchmarks/synthetic/p.05.2.2.2.sas'
+10-1-1:     './benchmarks/synthetic/p.10.1.2.sas'
+Rovers1:    './benchmarks/rovers/roversmall1.sas'
+Rovers2:    './benchmarks/rovers/roversmall3.sas'
+Rovers3:    './benchmarks/rovers/rovers01.sas'
+Rovers4:    './benchmarks/rovers/rovers02.sas'
+Rovers5:    './benchmarks/rovers/rovers03.sas'
