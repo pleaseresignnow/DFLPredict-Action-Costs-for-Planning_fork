@@ -16,12 +16,15 @@ pip install -r requirements.txt
 
 
 ### Data Generation
-create directort `mkdir data`
-First generate the datsets by runnning `gen_data.sh`.
+Create directoy `mkdir data`
+Then generate the datsets by runnning `gen_data.sh`
 
 ### Running The Experiments
 Run `Exp_run.sh` to run different configurations with A* with LM-Cut.
-To run with WA* with LM-Cut add `--method 'wastar'`
-To run with GBFS with hFF add `--method 'ffh'`
+- To run with WA* with LM-Cut add `--method 'wastar'`
+- To run with GBFS with hFF add `--method 'ffh'`
+- To Run with caching add `--caching --psolve 0.2` (for p=20%)
+Run `ShortestPathExp_run.sh` to run the shortestpath experiments.
 
-To Run with caching add `--caching --psolve 0.2` (for p=20%)
+### Tabulating Results
+For tabulating results you may use `plot_roversresults.py`, `plot_roversresults.py`, `plot_shortestpath.py`.  
