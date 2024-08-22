@@ -1,13 +1,13 @@
 # Code release for ECAI 2024 paper "Decision-Focused Learning to Predict Action Costs for Planning"
 
-## Fast Downward  Installation Intructions
+### Fast Downward  Installation Intructions
 Inside the repository 
 ```
 git clone https://github.com/aibasel/downward.git
 cd downward
 ./build.py
 ```
-## Virtual Environment Creation
+### Virtual Environment Creation
 ```
 python3 -m venv env_dflforplanning
 source env_dflforplanning/bin/activate
@@ -18,6 +18,8 @@ pip install -r requirements.txt
 ### Data Generation
 Create directoy `mkdir data`
 Then generate the datsets by runnning `gen_data.sh`
+
+* Refer to `DescriptionofInstances.txt` to find which .sas file to use for running each model mentioned in the paper.
 
 ### Running The Experiments
 Run `Exp_run.sh` to run different configurations with A* with LM-Cut.
