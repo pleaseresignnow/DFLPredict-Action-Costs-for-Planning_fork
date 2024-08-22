@@ -24,6 +24,7 @@ Run `Exp_run.sh` to run different configurations with A* with LM-Cut.
 - To run with WA* with LM-Cut add `--method 'wastar'`
 - To run with GBFS with hFF add `--method 'ffh'`
 - To Run with caching add `--caching --psolve 0.2` (for p=20%)
+
 Run `ShortestPathExp_run.sh` to run the shortestpath experiments.
 
 ### Tabulating Results
