@@ -17,5 +17,5 @@ authors:
 
 license: MIT License
 message: "If you use this software, please cite it using these metadata."
-repository-code: "https://github.com/d-hoeller/predict-and-optimize-in-planning"
+repository-code: "https://github.com/JayMan91/DFLPredict-Action-Costs-for-Planning"
 title: "Source code of Decision-Focused Learning to Predict Action Costs for Planning"
