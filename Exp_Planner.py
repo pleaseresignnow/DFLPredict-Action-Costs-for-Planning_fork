@@ -86,9 +86,9 @@ val_planner = [val_planner1, val_planner2]
 
 
 short_sas_file = sas_file.split('/')[-1]
-train_dataset = torch.load( './data/{}_train.pt'.format(short_sas_file))
-validation_dataset = torch.load( './data/{}_val.pt'.format(short_sas_file))
-test_dataset = torch.load( './data/{}_test.pt'.format(short_sas_file))
+train_dataset = torch.load( './data/{}_train.pt'.format(short_sas_file), weights_only=False)
+validation_dataset = torch.load( './data/{}_val.pt'.format(short_sas_file), weights_only=False)
+test_dataset = torch.load( './data/{}_test.pt'.format(short_sas_file), weights_only=False)
 
 print (len(train_dataset), len(test_dataset))
 train_setsize = len(train_dataset)

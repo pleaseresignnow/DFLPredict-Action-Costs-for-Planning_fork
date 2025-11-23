@@ -14,6 +14,7 @@ do
             python3 Exp_Planner.py --modelname 'SPO' --batchsize $b --sas_file "$sas" --deg 4 --result_dir "result_small/transport" --select_anynegative
             python3 Exp_Planner.py --modelname 'SPO' --batchsize $b --sas_file "$sas" --deg 4 --result_dir "result_small/transport"
             python3 Exp_Planner.py --modelname 'MSE' --batchsize $b --sas_file "$sas" --deg 4 --result_dir "result_small/transport"
+        done
     done
 done
 
@@ -31,5 +32,6 @@ do
             python3 Exp_Planner.py --modelname 'SPO' --batchsize $b --sas_file "$sas" --deg 4 --result_dir "result_small/rovers" --select_anynegative
             python3 Exp_Planner.py --modelname 'SPO' --batchsize $b --sas_file "$sas" --deg 4 --result_dir "result_small/rovers"
             python3 Exp_Planner.py --modelname 'MSE' --batchsize $b --sas_file "$sas" --deg 4 --result_dir "result_small/rovers"
+        done
     done
-# done
+done
