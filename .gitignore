@@ -176,3 +176,10 @@ Temp*
 
 # downward repo
 downward/
+
+# planing problem files
+output.sas
+sas_plan
+
+# vscode configs
+.vscode/
