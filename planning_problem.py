@@ -127,17 +127,16 @@ class PlanningProblem:
         numberStrs = msg_in.decode("utf-8")
         if print_port_op:
             print ("Received numbers", numberStrs)
-        indices = strtoint(numberStrs)
+        indices = np.fromstring(numberStrs, sep=" ")
 
         indices = np.array(indices[2:])
+        mid = len(indices) // 2
         list_actions = self.get_actions()
         solution = [0 for _ in range(len(list_actions))]
         solution = np.array(solution)
         # solution  [indices]  = 1
-        for ii in indices:
-            solution  [ii]  += 1
-
-
+        for ii, ci in zip(indices[:mid], indices[mid:]):
+            solution[int(ii)] += ci
             # solution[negative_indices] = np.clip(solution[negative_indices], 1, a_max=None)
         return solution, negative_indices
 
