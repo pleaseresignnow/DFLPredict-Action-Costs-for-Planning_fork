@@ -73,7 +73,7 @@ possible_actions = val_planner.get_actions()
 output_dim = len(possible_actions)
 timestamp = datetime.now().strftime('%d-%m-%Y-%H-%M-%S')
 nm = random.getrandbits(32)
-temp_file = "Temp{}_{}".format(nm, timestamp)
+temp_file = "tmp/Temp{}_{}".format(nm, timestamp)
 
 ### TWo Vallidation Planner, one with add-min one with thresholding
 val_planner1 = PlanningProblem(sas_file, temp_file)

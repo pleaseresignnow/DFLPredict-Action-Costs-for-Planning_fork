@@ -5,7 +5,7 @@ from torch import nn
 import warnings
 
 class PlanningProblem:
-    def __init__(self, name_file, temp_file='temp', precision_multiplier=4, deal_negative= 'clip', 
+    def __init__(self, name_file, temp_file='tmp/temp', precision_multiplier=4, deal_negative= 'clip', 
                  select_anynegative =False, use_caching=False, cache=None, p_solve= 0.,
                   use_heuristics= False,  port=5555, method='exact', astar_weight = 8, lambda_val =1):
         ### Comment: we can't always use precision_multiplier so high, if the costs already they will get huge after multiplication
