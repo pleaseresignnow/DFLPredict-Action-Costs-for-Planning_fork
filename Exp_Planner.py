@@ -36,6 +36,9 @@ parser.add_argument("--method", type=str, help="Solving method? ",default= 'exac
 parser.add_argument("--astar_weight", type= int, help="astar_weight", default= 2, required= False)
 parser.add_argument("--result_dir", type= str, help="directory of results", default= "results", required= False)
 parser.add_argument("--batchsize", type=int, help="degree of misspecifaction", default= 64, required= False)
+parser.add_argument("--with_relu", action='store_true', help="model with relu? ",  required=False)
+parser.add_argument("--lr", type= float, help="learning rate", default= 0.05, required=False)
+parser.add_argument("--epochs", type=int, help="number of training epochs", default= 20, required= False)
 
 
 
@@ -58,6 +61,11 @@ caching =  args.caching
 psolve = args.psolve
 
 lambda_val = args.lambda_val
+
+### additional parameters
+with_relu = args.with_relu
+lr = args.lr
+epochs = args.epochs
 
 input_dim = 5
 sas_file =  args.sas_file # 'problem_layout.sas'
@@ -247,27 +255,34 @@ def run_exp_script(model , config, name):
 
 
 
-if  name in ['SPO', 'MSE','SPOExplicit']:
-    for with_relu in [True, False]:
-        for lr in [1e-3, 5e-3, 0.01, 0.05, 0.1, 0.5]: # , 0.01
-            for epochs in [20]:
-                config = {"epochs": epochs,  "log_every_n_steps": 5, "lr": lr, "with_relu":with_relu, "batch_size":batch_size }
+# if  name in ['SPO', 'MSE','SPOExplicit']:
+#     for with_relu in [True, False]:
+#         for lr in [1e-3, 5e-3, 0.01, 0.05, 0.1, 0.5]: # , 0.01
+#             for epochs in [20]:
+#                 config = {"epochs": epochs,  "log_every_n_steps": 5, "lr": lr, "with_relu":with_relu, "batch_size":batch_size }
 
-                model = module_dict[name](net=build_net(input_dim, output_dim, with_relu= config['with_relu'] ),
-                                        training_problem=planner, evaluation_problem = val_planner,  normalize= normalize,
-                                          lr=config["lr"], batch_size = config['batch_size'])
+#                 model = module_dict[name](net=build_net(input_dim, output_dim, with_relu= config['with_relu'] ),
+#                                         training_problem=planner, evaluation_problem = val_planner,  normalize= normalize,
+#                                           lr=config["lr"], batch_size = config['batch_size'])
                 
-                run_exp_script(model , config, name)
+#                 run_exp_script(model , config, name)
 
-if  name in [ "AdditivePFY", "MultiplicativePFY"]:
-    for lr in [1e-3, 5e-3, 0.01, 0.05, 0.1, 0.5]:
-        for with_relu in [True, False]:
-            for sigma in [ 0.5, 1. , 2., 5. ]:
-                for epochs in [20]:
-                    config = {"epochs": epochs,  "log_every_n_steps": 5,"batch_size":batch_size , "lr": lr, "sigma": sigma, "with_relu":with_relu}
+# if  name in [ "AdditivePFY", "MultiplicativePFY"]:
+#     for lr in [1e-3, 5e-3, 0.01, 0.05, 0.1, 0.5]:
+#         for with_relu in [True, False]:
+#             for sigma in [ 0.5, 1. , 2., 5. ]:
+#                 for epochs in [20]:
+#                     config = {"epochs": epochs,  "log_every_n_steps": 5,"batch_size":batch_size , "lr": lr, "sigma": sigma, "with_relu":with_relu}
 
 
-                    model = module_dict[name](net=build_net(input_dim, output_dim,  with_relu=with_relu ), normalize= normalize,
-                                            training_problem=planner, evaluation_problem = val_planner, 
-                                            lr=config["lr"], batch_size = config['batch_size'], sigma = config["sigma"])
-                    run_exp_script(model , config, name)
+#                     model = module_dict[name](net=build_net(input_dim, output_dim,  with_relu=with_relu ), normalize= normalize,
+#                                             training_problem=planner, evaluation_problem = val_planner, 
+#                                             lr=config["lr"], batch_size = config['batch_size'], sigma = config["sigma"])
+#                     run_exp_script(model , config, name)
+
+if name in ['SPO', 'MSE', 'SPOExplicit']:
+    config = {"epochs": epochs,  "log_every_n_steps": 5, "lr": lr, "with_relu":with_relu, "batch_size":batch_size }
+    model = module_dict[name](net=build_net(input_dim, output_dim, with_relu= config['with_relu'] ),
+                                         training_problem=planner, evaluation_problem = val_planner,  normalize= normalize,
+                                           lr=config["lr"], batch_size = config['batch_size'])
+    run_exp_script(model , config, name)
