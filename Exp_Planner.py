@@ -39,6 +39,7 @@ parser.add_argument("--batchsize", type=int, help="degree of misspecifaction", d
 parser.add_argument("--with_relu", action='store_true', help="model with relu? ",  required=False)
 parser.add_argument("--lr", type= float, help="learning rate", default= 0.05, required=False)
 parser.add_argument("--epochs", type=int, help="number of training epochs", default= 20, required= False)
+parser.add_argument("--port", type=int, help="port number of dfl_h_server", default= 5555, required= False)
 
 
 
@@ -66,6 +67,7 @@ lambda_val = args.lambda_val
 with_relu = args.with_relu
 lr = args.lr
 epochs = args.epochs
+port = args.port
 
 input_dim = 5
 sas_file =  args.sas_file # 'problem_layout.sas'
@@ -76,7 +78,7 @@ sas_file =  args.sas_file # 'problem_layout.sas'
 # prop_validation = 0.1
 # batch_size = args.batchsize
 
-val_planner = PlanningProblem(sas_file)
+val_planner = PlanningProblem(sas_file, port=port)
 possible_actions = val_planner.get_actions()
 output_dim = len(possible_actions)
 timestamp = datetime.now().strftime('%d-%m-%Y-%H-%M-%S')
@@ -84,8 +86,8 @@ nm = random.getrandbits(32)
 temp_file = "tmp/Temp{}_{}".format(nm, timestamp)
 
 ### TWo Vallidation Planner, one with add-min one with thresholding
-val_planner1 = PlanningProblem(sas_file, temp_file)
-val_planner2 = PlanningProblem(sas_file, temp_file, deal_negative= 'add_min' )
+val_planner1 = PlanningProblem(sas_file, temp_file, port=port)
+val_planner2 = PlanningProblem(sas_file, temp_file, deal_negative= 'add_min', port=port)
 possible_actions = val_planner1.get_actions()
 output_dim = len(possible_actions)
 
@@ -151,15 +153,15 @@ module_dict = {'SPO':SPOModule, "MSE":MSEModule, 'SPOExplicit': ExplicitPenaltyS
 if add_min:
     if caching:
         planner = PlanningProblem(sas_file, temp_file, deal_negative= 'add_min' , method = method, astar_weight=astar_weight,
-                                  use_caching= True, cache= cache, p_solve= psolve, lambda_val= lambda_val)
+                                  use_caching= True, cache= cache, p_solve= psolve, lambda_val= lambda_val, port=port)
     else:
-        planner = PlanningProblem(sas_file, temp_file, deal_negative= 'add_min' , method = method, astar_weight=astar_weight, lambda_val= lambda_val)
+        planner = PlanningProblem(sas_file, temp_file, deal_negative= 'add_min' , method = method, astar_weight=astar_weight, lambda_val= lambda_val, port=port)
 else:
     if caching:
         planner = PlanningProblem(sas_file, temp_file, method = method, astar_weight=astar_weight, lambda_val= lambda_val,
-                                  use_caching= True, cache= cache, p_solve= psolve)
+                                  use_caching= True, cache= cache, p_solve= psolve, port=port)
     else:
-        planner = PlanningProblem(sas_file, temp_file, method = method, astar_weight=astar_weight, lambda_val= lambda_val)
+        planner = PlanningProblem(sas_file, temp_file, method = method, astar_weight=astar_weight, lambda_val= lambda_val, port=port)
 
 ### Selct any nonnegative means add-min/ min+
 if select_anynegative:
