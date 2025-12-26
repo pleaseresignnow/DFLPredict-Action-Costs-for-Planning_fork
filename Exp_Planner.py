@@ -188,7 +188,7 @@ def run_exp_script(model , config, name):
     if caching:
         printed_name = 'cachingNEW' + str ( round(psolve*100) ) + printed_name
     if use_heuristics:
-        printed_name = heuristicname + printed_name
+        printed_name = heuristicname[:75] + printed_name
     if add_scalar:
         printed_name = printed_name + "-addscalar"
     if add_min:
