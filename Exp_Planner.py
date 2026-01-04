@@ -5,6 +5,7 @@ from data import generate_instances, DataWrapper, planning_solution
 from planning_problem import *
 from torch.utils.data import DataLoader
 from pytorch_lightning.loggers import CSVLogger
+from pytorch_lightning.callbacks import ModelCheckpoint
 
 # from plotting import plot_results
 from training import MSEModule, SPOModule,AdditivePFYModule, MultiplicativePFYModule,  ExplicitPenaltySPOModule
@@ -40,6 +41,8 @@ parser.add_argument("--with_relu", action='store_true', help="model with relu? "
 parser.add_argument("--lr", type= float, help="learning rate", default= 0.05, required=False)
 parser.add_argument("--epochs", type=int, help="number of training epochs", default= 20, required= False)
 parser.add_argument("--port", type=int, help="port number of dfl_h_server", default= 5555, required= False)
+parser.add_argument("--time_limit", type=str, help="training time limit in DD:HH:MM:SS", default=None, required= False)
+parser.add_argument("--result_interval", type=int, help="validate every [result_interval] epochs", default=None, required= False)
 
 
 
@@ -68,6 +71,14 @@ with_relu = args.with_relu
 lr = args.lr
 epochs = args.epochs
 port = args.port
+
+### training config
+time_limit = args.time_limit
+result_interval = args.result_interval
+if (result_interval == None):
+    result_interval = epochs
+checkpoint_cb = ModelCheckpoint(monitor="val_rel_regret_1", mode="min", save_last=True, save_top_k=1)
+used_model = 'last' # 'best'
 
 input_dim = 5
 sas_file =  args.sas_file # 'problem_layout.sas'
@@ -209,16 +220,18 @@ def run_exp_script(model , config, name):
     
     experiment_path =  os.getcwd() + "/{}/Exp-{}_{}".format(result_dir, printed_name, timestamp)
     logger = CSVLogger(experiment_path)
-    trainer = pl.Trainer(min_epochs=config['epochs'], max_epochs=config['epochs'],
-                         check_val_every_n_epoch = config['epochs'],
+    trainer = pl.Trainer(max_epochs=config['epochs'],
+                        check_val_every_n_epoch = result_interval,
                         # log_every_n_steps=config['log_every_n_steps'],
                         # val_check_interval=config['log_every_n_steps'], 
-                        logger=logger)
+                        logger=logger,
+                        max_time=time_limit,
+                        callbacks=[checkpoint_cb])
     # try:
-    trainer.validate(model=model, dataloaders=validation_dl)
-    trainer.fit(model, train_dl, validation_dl)
+    trainer.validate(model=model, dataloaders=validation_dl, ckpt_path=used_model)
+    trainer.fit(model, train_dl, validation_dl, ckpt_path=used_model)
 
-    testresult = trainer.test(dataloaders=test_dl)
+    testresult = trainer.test(dataloaders=test_dl, ckpt_path=used_model)
     print("name", name)
     # pred =  trainer.predict(dataloaders=test_dl)
     # pred_np = pred[0].detach().numpy().flatten()
